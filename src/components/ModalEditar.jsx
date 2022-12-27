@@ -14,9 +14,7 @@ function ModalEditar({ setUsers, id }) {
   const [alert, setAlert] = useState(null);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
+  
   const update = async (e) => {
     e.preventDefault();
     const dir = `${Apiurl}user/${id}`;
@@ -73,14 +71,19 @@ function ModalEditar({ setUsers, id }) {
     }
   };
 
-  useEffect(() => {
-    const getUserById = async () => {
-      const response = await axios.get(`${Apiurl}user/${id}`);
-      setName(response.data.name);
-      setEmail(response.data.email);
-    };
+
+
+  const getUserById = async () => {
+    const response = await axios.get(`${Apiurl}user/${id}`);
+    setName(response.data.name);
+    setEmail(response.data.email);
+  };
+
+
+  const handleShow = () => {
     getUserById();
-  }, []);
+    setShow(true);
+  };
 
   return (
     <>

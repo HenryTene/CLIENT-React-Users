@@ -91,7 +91,7 @@ function ModalAgregar({ setUsers }) {
 
       setAlert({
         variant: "success",
-        message: "El registro ha sido añadido con éxito",
+        message: "El registro ha sido agregado con éxito",
       });
       setTimeout(() => {
         setAlert(null);
