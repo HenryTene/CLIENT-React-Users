@@ -5,43 +5,72 @@ import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Apiurl } from "../services/apirest";
+import Alert from "react-bootstrap/Alert";
 
-function ModalEditar({setUsers,id}) {
- 
+function ModalEditar({ setUsers, id }) {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
-  
-  
+  const [alert, setAlert] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
   };
-
   const update = async (e) => {
     e.preventDefault();
     const dir = `${Apiurl}user/${id}`;
-    await axios.put(dir, {
-      name: name,
-      email: email,
-    });
+    if (!name.trim() || !email.trim()) {
+      setAlert({
+        variant: "danger",
+        message: "Los campos no pueden estar vacios",
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+      return;
+    }
 
-    setUsers((prev)=>{
-      return prev.map((user)=>{
-        if(user.id === id){
-          return{
-            ...user,
-            name:name,
-            email:email
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      setAlert({
+        variant: "danger",
+        message: "El correo electrónico es inválido",
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+      return;
+    }
+
+    try {
+      await axios.put(dir, {
+        name: name,
+        email: email,
+      });
+
+      setUsers((prev) => {
+        return prev.map((user) => {
+          if (user.id === id) {
+            return {
+              ...user,
+              name: name,
+              email: email,
+            };
           }
-        }
-        return user
-      })
-
-    })   
-    handleClose();
+          return user;
+        });
+      });
+      setAlert({
+        variant: "success",
+        message: "El registro ha sido modificado con éxito",
+      });
+      setTimeout(() => {
+        setAlert(null);
+        handleClose();
+      }, 1500);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -64,7 +93,16 @@ function ModalEditar({setUsers,id}) {
           <Modal.Title>Editar usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form /* onSubmit={store} */>
+          {alert && (
+            <Alert
+              variant={alert.variant}
+              onClose={() => setAlert(null)}
+              dismissible
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control

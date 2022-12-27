@@ -88,9 +88,7 @@ function ModalAgregar({ setUsers }) {
           },
         ];
       });
-  
-     
-  
+
       setAlert({
         variant: "success",
         message: "El registro ha sido añadido con éxito",
@@ -100,15 +98,9 @@ function ModalAgregar({ setUsers }) {
         limpiarFormulario();
         handleClose();
       }, 1500);
-  
-     
-
-
     } catch (error) {
       console.log("Este error es el siguiente:" + error);
     }
-
-   
   };
 
   return (
