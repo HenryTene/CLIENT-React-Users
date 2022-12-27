@@ -12,10 +12,8 @@ import Paginacion from "./Paginacion";
 const Tabla = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-
   const [active, setActive] = useState(1);
-
-  const itemsPerPage = 10;
+  const itemsPerPage = 8;
 
   useEffect(() => {
     getAllUsers();
@@ -38,7 +36,8 @@ const Tabla = () => {
     //console.log(results);
   } else {
     results = users.filter((dato) =>
-      dato.name.toLowerCase().includes(search.toLowerCase())
+      dato.name.toLowerCase().includes(search.toLowerCase())||
+      dato.email.toLowerCase().includes(search.toLowerCase())
     );
   }
 
