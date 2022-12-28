@@ -14,6 +14,8 @@ function ModalAgregar({ setUsers }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rpassword, setRpassword] = useState("");
+  const [error, setError] = useState(null);
+
 
   const limpiarFormulario = () => {
     setName("");
@@ -68,9 +70,9 @@ function ModalAgregar({ setUsers }) {
       }, 2000);
       return;
     }
-
+    
     try {
-      const response = await axios.post(`${Apiurl}register`, {
+      const  response = await axios.post(`${Apiurl}register`, {
         name: name,
         email: email,
         password: password,
@@ -99,7 +101,17 @@ function ModalAgregar({ setUsers }) {
         handleClose();
       }, 1500);
     } catch (error) {
-      console.log("Este error es el siguiente:" + error);
+      //console.log(error.response.data.errors.email[0]);
+      //console.log(error.response.data.message);
+      setAlert({
+        variant: "danger",
+        message: error.response.data.message,
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+
+      
     }
   };
 
