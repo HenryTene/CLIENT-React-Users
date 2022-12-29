@@ -5,47 +5,38 @@ import Alert from "react-bootstrap/Alert";
 import axios from "axios";
 import { Apiurl } from "../services/apirest";
 
-function ModalEliminar({ setUsers, id }) {
+const ModalEliminar = ({ id, setUsers }) => {
   const [show, setShow] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  
-  const handleClose = () => {
-    setTimeout(() => {
-      setShow(false);
-    }, 5000);
-  };
-  const handleShow = () => {
-    setShow(true);
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  const deleteUser = async (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
-    
+
     try {
-     const  response = await axios.delete(`${Apiurl}user/${id}`);
-      setUsers((prev) => {
-        return prev.filter((user) => user.id !== id);
-      });
+      // hacer la solicitud HTTP para eliminar el usuario con el ID especificado
+      const response = await axios.delete(`${Apiurl}user/${id}`);
+      setUsers((prev) => prev.filter((user) => user.id !== id));
       
       setAlert({
         variant: "success",
         message: response.data.message,
       });
-
-      setTimeout(() => {        
+      setTimeout(() => {
+        setAlert(null);
+        console.log(response.data.message);
         handleClose();
       }, 5000);
-
     } catch (error) {
       setAlert({
         variant: "danger",
-        message: error.response,
+        message: error.response.data.message,
       });
       setTimeout(() => {
-        
-        handleClose();
-      }, 5000);
+        setAlert(null);
+      }, 2000);
     }
   };
 
@@ -60,7 +51,7 @@ function ModalEliminar({ setUsers, id }) {
           <Modal.Title>Eliminar usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {alert && (
+        {alert && (
             <Alert
               variant={alert.variant}
               onClose={() => setAlert(null)}
@@ -69,19 +60,19 @@ function ModalEliminar({ setUsers, id }) {
               {alert.message}
             </Alert>
           )}
-          Atención , ¿Está seguro de querer borrar el registro?
+          ¿Estás seguro de que quieres eliminar este usuario?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="danger" type="submit" onClick={deleteUser}>
-            Aceptar
+          <Button variant="danger"  type="submit" onClick={handleDelete}>
+            Confirmar
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
-}
+};
 
 export default ModalEliminar;

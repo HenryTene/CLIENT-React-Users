@@ -8,16 +8,29 @@ import ModalAgregar from "./ModalAgregar";
 import ModalEditar from "./ModalEditar";
 import ModalEliminar from "./ModalEliminar";
 import Paginacion from "./Paginacion";
+import ModalDelete from "./ModalDelete";
 
 const Tabla = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [active, setActive] = useState(1);
+  const [deleted, setDeleted] = useState(null);
+  const [id, setId] = useState(null);
+
+  
   const itemsPerPage = 8;
 
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  useEffect(() => {
+    if (deleted !== id) {
+      setUsers((prev) => prev.filter((user) => user.id !== deleted));
+      setDeleted(id);
+      
+    }
+  }, [deleted]);
 
   const getAllUsers = async () => {
     const response = await axios.get(`${Apiurl}users`);
@@ -35,15 +48,16 @@ const Tabla = () => {
     results = users;
     //console.log(results);
   } else {
-    results = users.filter((dato) =>
-      dato.name.toLowerCase().includes(search.toLowerCase())||
-      dato.email.toLowerCase().includes(search.toLowerCase())||
-      dato.id.toString().includes(search.toString())
+    results = users.filter(
+      (dato) =>
+        dato.name.toLowerCase().includes(search.toLowerCase()) ||
+        dato.email.toLowerCase().includes(search.toLowerCase()) ||
+        dato.id.toString().includes(search.toString())
     );
   }
 
   // Calcular el número total de páginas
-  const totalpages  = Math.ceil(users.length / itemsPerPage);
+  const totalpages = Math.ceil(users.length / itemsPerPage);
 
   const startIndex = (active - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -104,7 +118,10 @@ const Tabla = () => {
                 <td>
                   <div className="mb-2">
                     <ModalEditar id={user.id} setUsers={setUsers} />{" "}
-                    <ModalEliminar id={user.id} setUsers={setUsers} />
+                    <ModalDelete
+                      id={user.id}
+                      setDelete={setDeleted}                      
+                    />
                   </div>
                 </td>
               </tr>
@@ -114,7 +131,7 @@ const Tabla = () => {
         <Container style={{ display: "flex", justifyContent: "flex-end" }}>
           <Paginacion
             active={active}
-            totalpages ={totalpages}
+            totalpages={totalpages}
             handlePageChange={handlePageChange}
           />
         </Container>
