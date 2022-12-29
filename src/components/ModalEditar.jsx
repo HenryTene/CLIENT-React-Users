@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Apiurl } from "../services/apirest";
 import Alert from "react-bootstrap/Alert";
