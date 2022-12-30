@@ -13,25 +13,78 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/NoticiasPeru.png";
+import Alert from "react-bootstrap/Alert";
 
 const Nuevo = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rpassword, setRpassword] = useState("");
+  const [alert, setAlert] = useState(null);
+
   const navigate = useNavigate();
 
   /* const navigate = useNavigate(); */
 
   const store = async (e) => {
     e.preventDefault();
-    await axios.post(`${Apiurl}register`, {
-      name: name,
-      email: email,
-      password: password,
-      password_confirmation: rpassword,
-    });
-    navigate("/dashboard");
+    if (
+      !name.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !rpassword.trim()
+    ) {
+      setAlert({
+        variant: "danger",
+        message: "Todos los campos son obligatorios",
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+      return;
+    }
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      setAlert({
+        variant: "danger",
+        message: "El correo electrónico es inválido",
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+      return;
+    }
+
+    if (password !== rpassword) {
+      setAlert({
+        variant: "danger",
+        message: "Las contraseñas no coinciden",
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+      return;
+    }
+
+    try {
+      await axios.post(`${Apiurl}register`, {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: rpassword,
+      });
+
+      setAlert({
+        variant: "success",
+        message: "El usuario ha sido agregado con éxito",
+      });
+      //handleShow();
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const preview = () => {
@@ -59,11 +112,20 @@ const Nuevo = () => {
       <Container>
         <Row>
           <Col lg={4}></Col>
-            <Col lg={4}>
+          <Col lg={4}>
             <Card>
               <Card.Body>
+                {alert && (
+                  <Alert
+                    variant={alert.variant}
+                    onClose={() => setAlert(null)}
+                    dismissible
+                  >
+                    {alert.message}
+                  </Alert>
+                )}
                 <Card.Title className="text-center">
-                 Registro de Usuarios
+                  Registro de Usuarios
                 </Card.Title>
                 <Form onSubmit={store}>
                   <Form.Group
@@ -111,7 +173,7 @@ const Nuevo = () => {
               </Card.Body>
             </Card>
           </Col>
-           <Col lg={4}></Col>
+          <Col lg={4}></Col>
         </Row>
       </Container>
     </>
