@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
@@ -7,10 +7,10 @@ import { Apiurl } from "../services/apirest";
 
 function ModalDelete({ id, setDelete }) {
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [showMessage, setShowMessage] = useState(false);
   const [success, setSuccess] = useState(false);
+
   const handleClose = () => {
     if (!success) {
       setShow(false);
@@ -23,16 +23,14 @@ function ModalDelete({ id, setDelete }) {
     }
   };
   const handleShow = () => setShow(true);
+
   const remove = async () => {
-    setLoading(true);
     try {
       const response = await axios.delete(`${Apiurl}user/${id}`);
 
       setShowMessage(true);
-      
-
-      setTimeout(() => {     
-        setDelete(id);   
+      setTimeout(() => {
+        setDelete(id);
         setShow(false);
       }, 2000);
 
@@ -47,9 +45,6 @@ function ModalDelete({ id, setDelete }) {
       });
       console.log(error);
     }
-
-    // Deshabilitar el botón "Confirmar" una vez que se haya completado el proceso de eliminación
-    setLoading(false);
   };
   return (
     <>
@@ -68,7 +63,7 @@ function ModalDelete({ id, setDelete }) {
             </>
           )}
           {"¿Estás seguro de que quieres eliminar este usuario? "}
-          <br/>
+          <br />
           {"Esta acción es irreversible"}
         </Modal.Body>
         <Modal.Footer>
