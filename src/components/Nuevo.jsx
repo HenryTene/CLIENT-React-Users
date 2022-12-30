@@ -58,7 +58,8 @@ const Nuevo = () => {
       </Row>
       <Container>
         <Row>
-          <Col>
+          <Col lg={4}></Col>
+            <Col lg={4}>
             <Card>
               <Card.Body>
                 <Card.Title className="text-center">
@@ -69,31 +70,31 @@ const Nuevo = () => {
                     className="mb-3"
                     controlId="exampleForm.ControlInput1"
                   >
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Nombre</Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="Name"
+                      placeholder="Nombre"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>Correo</Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="name@example.com"
+                      placeholder="nombre@ejemplo.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Contraseña</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Password"
+                      placeholder="Contraseña"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Form.Label>Repeat Password</Form.Label>
+                    <Form.Label>Repetir Contraseña</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Password"
+                      placeholder="Contraseña"
                       value={rpassword}
                       onChange={(e) => setRpassword(e.target.value)}
                     />
@@ -110,6 +111,7 @@ const Nuevo = () => {
               </Card.Body>
             </Card>
           </Col>
+           <Col lg={4}></Col>
         </Row>
       </Container>
     </>
