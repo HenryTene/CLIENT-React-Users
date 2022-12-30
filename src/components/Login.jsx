@@ -16,10 +16,6 @@ import logo from "../assets/img/NoticiasPeru.png";
 import { Link } from "react-router-dom";
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     form: {
       email: "",
@@ -29,11 +25,11 @@ class Login extends React.Component {
     errorMsg: "",
   };
 
-  manejadorChange = async (e) => {
-    await this.setState({
+  manejadorChange = (e) => {
+    this.setState({
       form: {
         ...this.state.form,
-        [e.target.type]: e.target.value,
+        [e.target.name]: e.target.value,
       },
     });
   };
@@ -63,9 +59,6 @@ class Login extends React.Component {
       });
   };
 
-  /*  manejadorSubmit(e) {
-    e.preventDefault();
-  } */
   manejadorSubmit = (e) => {
     e.preventDefault();
   };
@@ -99,24 +92,22 @@ class Login extends React.Component {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Correo</Form.Label>
                       <Form.Control
-                        type="email"
+                        name="email"
                         placeholder="correo"
                         onChange={this.manejadorChange}
                       />
-                      {/* <Form.Text className="text-muted">
-                      Nunca compartiremos su correo electrónico con nadie.
-                      </Form.Text> */}
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                       <Form.Label>Contraseña</Form.Label>
                       <Form.Control
+                        name="password"
                         type="password"
                         placeholder="contraseña"
                         onChange={this.manejadorChange}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="Check me out" />
+                      <Form.Check type="checkbox" label="No cerrar sesión" />
                     </Form.Group>
                     <div className="d-grid gap-2">
                       <Button
@@ -124,24 +115,20 @@ class Login extends React.Component {
                         type="submit"
                         onClick={this.manejadorBoton}
                       >
-                        Iniciar
+                        Ingresar
                       </Button>
                     </div>{" "}
                     <br />
-                    <Link to="/">
-                      <div className="d-grid gap-2">
-                        <Button variant="secondary">cancelar</Button>
-                      </div>
-                    </Link>
+                    ¿No tienes una cuenta?
+                    <Link to="/register" style={{ textDecoration: "none" }}> Registrate aquí</Link>
+                    {this.state.error ? (
+                      <Alert variant="danger">{this.state.errorMsg}</Alert>
+                    ) : (
+                      ""
+                    )}
                   </Form>
                 </Card.Body>
               </Card>
-
-              <br />
-
-              {this.state.error === true && (
-                <Alert variant="danger">{this.state.errorMsg}</Alert>
-              )}
             </Col>
             <Col lg={4}></Col>
           </Row>
