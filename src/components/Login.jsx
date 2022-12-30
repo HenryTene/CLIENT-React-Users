@@ -8,10 +8,12 @@ import {
   Alert,
   Navbar,
   Figure,
+  Card,
 } from "react-bootstrap";
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import logo from "../assets/img/NoticiasPeru.png";
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -61,9 +63,12 @@ class Login extends React.Component {
       });
   };
 
-  manejadorSubmit(e) {
+  /*  manejadorSubmit(e) {
     e.preventDefault();
-  }
+  } */
+  manejadorSubmit = (e) => {
+    e.preventDefault();
+  };
 
   render() {
     return (
@@ -85,43 +90,53 @@ class Login extends React.Component {
           <Row>
             <Col lg={4}></Col>
             <Col lg={4}>
-              <Form onSubmit={this.manejadorSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Email"
-                    onChange={this.manejadorChange}
-                  />
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
-                </Form.Group>
+              <Card>
+                <Card.Body>
+                  <Card.Title className="text-center">
+                    Inicio de sesión
+                  </Card.Title>
+                  <Form onSubmit={this.manejadorSubmit}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>Correo</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="correo"
+                        onChange={this.manejadorChange}
+                      />
+                      {/* <Form.Text className="text-muted">
+                      Nunca compartiremos su correo electrónico con nadie.
+                      </Form.Text> */}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                      <Form.Label>Contraseña</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="contraseña"
+                        onChange={this.manejadorChange}
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="Check me out" />
+                    </Form.Group>
+                    <div className="d-grid gap-2">
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={this.manejadorBoton}
+                      >
+                        Iniciar
+                      </Button>
+                    </div>{" "}
+                    <br />
+                    <Link to="/">
+                      <div className="d-grid gap-2">
+                        <Button variant="secondary">cancelar</Button>
+                      </div>
+                    </Link>
+                  </Form>
+                </Card.Body>
+              </Card>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    onChange={this.manejadorChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <div className="d-grid gap-2">
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={this.manejadorBoton}
-                  >
-                    Sign in
-                  </Button>
-                  <Button variant="secondary" type="submit">
-                    cancelar
-                  </Button>{" "}
-                </div>
-              </Form>
               <br />
 
               {this.state.error === true && (

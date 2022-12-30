@@ -116,8 +116,8 @@ function ModalAgregar({ setUsers }) {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Agregar usuario</Modal.Title>
+        <Modal.Header closeButton >
+          <Modal.Title  >Agregar usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {alert && (
@@ -131,35 +131,35 @@ function ModalAgregar({ setUsers }) {
           )}
           <Form id="form">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Name"
+                placeholder="Nombre"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
 
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Correo</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="name@example.com"
+                placeholder="nombre@ejemplo.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Password"
+                placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <Form.Label>Repeat Password</Form.Label>
+              <Form.Label>Repetir Contraseña</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Password"
+                placeholder="Repetir Contraseña"
                 value={rpassword}
                 onChange={(e) => setRpassword(e.target.value)}
                 required
