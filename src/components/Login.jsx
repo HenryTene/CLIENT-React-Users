@@ -9,6 +9,7 @@ import {
   Navbar,
   Figure,
   Card,
+  Nav,
 } from "react-bootstrap";
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
@@ -71,6 +72,11 @@ class Login extends React.Component {
             <Figure className="me-auto">
               <Figure.Image width={180} height={5} src={logo} />
             </Figure>
+            <Navbar.Collapse className="justify-content-end">
+              <Nav>
+                <Nav.Link href="/">Principal</Nav.Link>                
+              </Nav>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
         <Row>
@@ -85,8 +91,14 @@ class Login extends React.Component {
             <Col lg={4}>
               <Card>
                 <Card.Body>
-                  <Card.Title className="text-center">
-                    Inicio de sesión
+                  <Card.Title>
+                    <Navbar bg="light">
+                      <Container>
+                        <Navbar.Collapse className="justify-content-center">
+                          <Navbar.Text>Inicio de sesión</Navbar.Text>
+                        </Navbar.Collapse>
+                      </Container>
+                    </Navbar>
                   </Card.Title>
                   <Form onSubmit={this.manejadorSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -107,7 +119,7 @@ class Login extends React.Component {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="No cerrar sesión" />
+                      <Form.Check type="checkbox" label="Recuérdame" />
                     </Form.Group>
                     <div className="d-grid gap-2">
                       <Button
@@ -120,7 +132,10 @@ class Login extends React.Component {
                     </div>{" "}
                     <br />
                     ¿No tienes una cuenta?
-                    <Link to="/register" style={{ textDecoration: "none" }}> Registrate aquí</Link>
+                    <Link to="/register" style={{ textDecoration: "none" }}>
+                      {" "}
+                      Registrate aquí
+                    </Link>
                     {this.state.error ? (
                       <Alert variant="danger">{this.state.errorMsg}</Alert>
                     ) : (
@@ -137,5 +152,4 @@ class Login extends React.Component {
     );
   }
 }
-
 export default Login;
