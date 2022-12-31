@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/NoticiasPeru.png";
 import Alert from "react-bootstrap/Alert";
+import userAd from "../assets/img/user-add.png";
 
 const Nuevo = () => {
   const [name, setName] = useState("");
@@ -134,7 +135,13 @@ const Nuevo = () => {
                   <Navbar bg="light">
                     <Container>
                       <Navbar.Collapse className="justify-content-center">
-                        <Navbar.Text>Registro de Usuarios</Navbar.Text>
+                        <Navbar.Text>
+                          {" "}
+                          <Figure className="me-auto">
+                            <Figure.Image width={25} height={25} src={userAd} />
+                          </Figure>{" "}
+                          Registro de Usuarios
+                        </Navbar.Text>
                       </Navbar.Collapse>
                     </Container>
                   </Navbar>
