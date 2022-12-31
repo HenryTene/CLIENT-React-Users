@@ -10,6 +10,7 @@ import {
   Navbar,
   Figure,
   Card,
+  Nav,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/NoticiasPeru.png";
@@ -101,6 +102,11 @@ const Nuevo = () => {
           <Figure className="me-auto">
             <Figure.Image width={180} height={5} src={logo} />
           </Figure>
+          <Navbar.Collapse className="justify-content-end">
+            <Nav>
+              <Nav.Link href="/">Principal</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       <Row>
@@ -125,7 +131,13 @@ const Nuevo = () => {
                   </Alert>
                 )}
                 <Card.Title className="text-center">
-                  Registro de Usuarios
+                  <Navbar bg="light">
+                    <Container>
+                      <Navbar.Collapse className="justify-content-center">
+                        <Navbar.Text>Registro de Usuarios</Navbar.Text>
+                      </Navbar.Collapse>
+                    </Container>
+                  </Navbar>
                 </Card.Title>
                 <Form onSubmit={store}>
                   <Form.Group

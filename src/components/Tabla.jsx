@@ -120,7 +120,7 @@ const Tabla = () => {
                     <ModalEditar id={user.id} setUsers={setUsers} />{" "}
                     <ModalDelete
                       id={user.id}
-                      setDelete={setDeleted}                      
+                      setDelete={setDeleted}
                     />
                   </div>
                 </td>
