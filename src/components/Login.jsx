@@ -14,6 +14,7 @@ import {
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import logo from "../assets/img/NoticiasPeru.png";
+import lock from "../assets/img/lock.png";
 import { Link } from "react-router-dom";
 
 class Login extends React.Component {
@@ -35,9 +36,9 @@ class Login extends React.Component {
     });
   };
 
-  preview = () => {
+  /*  preview = () => {
     window.location = "/dashboard";
-  };
+  }; */
 
   manejadorBoton = () => {
     let url = Apiurl + "login";
@@ -74,7 +75,7 @@ class Login extends React.Component {
             </Figure>
             <Navbar.Collapse className="justify-content-end">
               <Nav>
-                <Nav.Link href="/">Principal</Nav.Link>                
+                <Nav.Link href="/">Principal</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -93,9 +94,15 @@ class Login extends React.Component {
                 <Card.Body>
                   <Card.Title>
                     <Navbar bg="light">
+                      {" "}
                       <Container>
                         <Navbar.Collapse className="justify-content-center">
-                          <Navbar.Text>Inicio de sesión</Navbar.Text>
+                          <Navbar.Text>
+                            <Figure className="me-auto">
+                              <Figure.Image width={25} height={25} src={lock} />
+                            </Figure>
+                            Inicio de sesión
+                          </Navbar.Text>
                         </Navbar.Collapse>
                       </Container>
                     </Navbar>
