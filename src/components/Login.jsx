@@ -10,12 +10,14 @@ import {
   Figure,
   Card,
   Nav,
+  Spinner,
 } from "react-bootstrap";
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import logo from "../assets/img/NoticiasPeru.png";
 import { Link } from "react-router-dom";
 import lock from "../assets/img/lock.png";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -24,6 +26,8 @@ const Login = () => {
   });
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  
 
   const manejadorChange = (e) => {
     setForm({
@@ -32,27 +36,30 @@ const Login = () => {
     });
   };
 
-  const preview = () => {
-    window.location = "/dashboard";
-  };
+  
 
-  const manejadorBoton = () => {
+  const manejadorBoton = async () => {
+    setLoading(true);
     let url = Apiurl + "login";
 
-    axios
-      .post(url, form)
-      .then((response) => {
-        if (response.statusText === "OK") {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", response.data.user.name);
+    try {
+      const response = await axios.post(url, form);
+      if (response.statusText === "OK") {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data.user.name);
 
-          window.location = "/dashboard";
-        }
-      })
-      .catch((error) => {
-        setError(true);
-        setErrorMsg(error.response.data.message);
-      });
+        window.location = "/dashboard";
+        //navigate("/dashboard");
+      }
+    } catch (error) {
+      setError(true);
+      setErrorMsg(error.response.data.message);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+        setError(false);
+      }, 2000);
+    }
   };
 
   const manejadorSubmit = (e) => {
@@ -100,6 +107,7 @@ const Login = () => {
                     </Container>
                   </Navbar>
                 </Card.Title>
+                {error ? <Alert variant="danger">{errorMsg}</Alert> : <></>}
                 <Form onSubmit={manejadorSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Correo</Form.Label>
@@ -108,9 +116,6 @@ const Login = () => {
                       placeholder="correo"
                       onChange={manejadorChange}
                     />
-                    {/* <Form.Text className="text-muted">
-                    Nunca compartiremos su correo electrónico con nadie
-                    </Form.Text> */}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Contraseña</Form.Label>
@@ -123,14 +128,22 @@ const Login = () => {
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Recuérdame" />
                   </Form.Group>
-                  <div className="d-grid gap-2">
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      onClick={manejadorBoton}
-                    >
-                      Iniciar
-                    </Button>
+                  <div className="d-grid gap-2" >
+                    {loading ? (
+                      <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Spinner animation="border" role="status" variant="primary">
+                        <span className="sr-only"></span>
+                      </Spinner>
+                      </div>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={manejadorBoton}
+                      >
+                        Iniciar
+                      </Button>
+                    )}
                   </div>{" "}
                   <br />
                   ¿No tienes una cuenta?
@@ -139,7 +152,6 @@ const Login = () => {
                     Registrate aquí
                   </Link>
                 </Form>
-                {error ? <Alert variant="danger">{errorMsg}</Alert> : <></>}
               </Card.Body>
             </Card>
           </Col>
