@@ -152,7 +152,6 @@ const Login = () => {
                     Registrate aquí
                   </Link>
                 </Form>
-                
               </Card.Body>
             </Card>
           </Col>
