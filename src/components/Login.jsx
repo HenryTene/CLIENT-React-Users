@@ -86,7 +86,7 @@ const Login = () => {
             <Card>
               <Card.Body>
                 <Card.Title className="text-center">
-                <Navbar bg="light">
+                  <Navbar bg="light">
                     <Container>
                       <Navbar.Collapse className="justify-content-center">
                         <Navbar.Text>
@@ -99,7 +99,6 @@ const Login = () => {
                       </Navbar.Collapse>
                     </Container>
                   </Navbar>
-                 
                 </Card.Title>
                 <Form onSubmit={manejadorSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -134,18 +133,13 @@ const Login = () => {
                     </Button>
                   </div>{" "}
                   <br />
-                 
                   ¿No tienes una cuenta?
-                    <Link to="/register" style={{ textDecoration: "none" }}>
-                      {" "}
-                      Registrate aquí
-                    </Link>
+                  <Link to="/register" style={{ textDecoration: "none" }}>
+                    {" "}
+                    Registrate aquí
+                  </Link>
                 </Form>
-                {error ? (
-                  <Alert variant="danger">{errorMsg}</Alert>
-                ) : (
-                  <></>
-                )}
+                {error ? <Alert variant="danger">{errorMsg}</Alert> : <></>}
               </Card.Body>
             </Card>
           </Col>
