@@ -27,7 +27,6 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  
 
   const manejadorChange = (e) => {
     setForm({
@@ -35,8 +34,6 @@ const Login = () => {
       [e.target.type]: e.target.value,
     });
   };
-
-  
 
   const manejadorBoton = async () => {
     setLoading(true);
@@ -82,9 +79,6 @@ const Login = () => {
       </Navbar>
       <Row>
         <br />
-        <br />
-        <br />
-        <br />
       </Row>
       <Container>
         <Row>
@@ -128,12 +122,18 @@ const Login = () => {
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Recuérdame" />
                   </Form.Group>
-                  <div className="d-grid gap-2" >
+                  <div className="d-grid gap-2">
                     {loading ? (
-                      <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Spinner animation="border" role="status" variant="primary">
-                        <span className="sr-only"></span>
-                      </Spinner>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <Spinner
+                          animation="border"
+                          role="status"
+                          variant="primary"
+                        >
+                          <span className="sr-only"></span>
+                        </Spinner>
                       </div>
                     ) : (
                       <Button
@@ -149,7 +149,7 @@ const Login = () => {
                   ¿No tienes una cuenta?
                   <Link to="/register" style={{ textDecoration: "none" }}>
                     {" "}
-                    Registrate aquí
+                    Regístrate aquí
                   </Link>
                 </Form>
               </Card.Body>

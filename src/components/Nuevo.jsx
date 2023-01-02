@@ -85,7 +85,13 @@ const Nuevo = () => {
         navigate("/dashboard");
       }, 2000);
     } catch (error) {
-      console.log(error);
+      setAlert({
+        variant: "danger",
+        message: error.response.data.message,
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
     }
   };
 
