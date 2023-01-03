@@ -13,7 +13,7 @@ function ModalEditar({ setUsers, id }) {
   const [alert, setAlert] = useState(null);
 
   const handleClose = () => setShow(false);
-  
+
   const update = async (e) => {
     e.preventDefault();
     const dir = `${Apiurl}user/${id}`;
@@ -66,25 +66,27 @@ function ModalEditar({ setUsers, id }) {
         handleClose();
       }, 1500);
     } catch (error) {
-      console.log(error.response.data.message);
+      let er = null;
+      if (error.response.data.message === "The email has already been taken.") {
+        er = "El email ya ha sido registrado";
+      } else {
+        er = error.response.data.message;
+      }
       setAlert({
         variant: "danger",
-        message: error.response.data.message,
+        message: er,
       });
       setTimeout(() => {
-        setAlert(null);        
+        setAlert(null);
       }, 1500);
     }
   };
-
-
 
   const getUserById = async () => {
     const response = await axios.get(`${Apiurl}user/${id}`);
     setName(response.data.name);
     setEmail(response.data.email);
   };
-
 
   const handleShow = () => {
     getUserById();
