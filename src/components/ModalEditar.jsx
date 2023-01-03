@@ -66,7 +66,14 @@ function ModalEditar({ setUsers, id }) {
         handleClose();
       }, 1500);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
+      setAlert({
+        variant: "danger",
+        message: error.response.data.message,
+      });
+      setTimeout(() => {
+        setAlert(null);        
+      }, 1500);
     }
   };
 
