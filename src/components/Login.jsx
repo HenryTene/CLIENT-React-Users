@@ -27,6 +27,7 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const manejadorChange = (e) => {
     setForm({
@@ -42,6 +43,10 @@ const Login = () => {
     try {
       const response = await axios.post(url, form);
       if (response.statusText === "OK") {
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data.user.name);
 
@@ -101,6 +106,12 @@ const Login = () => {
                     </Container>
                   </Navbar>
                 </Card.Title>
+                {showAlert ? (
+                  <Alert variant="success">Inicio de sesión exitoso</Alert>
+                ) : (
+                  <></>
+                )}
+
                 {error ? <Alert variant="danger">{errorMsg}</Alert> : <></>}
                 <Form onSubmit={manejadorSubmit}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
