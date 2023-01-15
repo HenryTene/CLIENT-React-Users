@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
+import { Button, Form, Stack, Col } from "react-bootstrap";
 
 const TablaPautas = () => {
   const [pautas, setPautas] = useState([]);
@@ -10,18 +11,16 @@ const TablaPautas = () => {
   const [deleted, setDeleted] = useState(null);
   const [id, setId] = useState(null);
 
-
   useEffect(() => {
     getAllUsers();
   }, []);
 
-
   const getAllUsers = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const config = {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
     try {
       const response = await axios.get(`${Apiurl}pautas_internet`, config);
@@ -31,37 +30,65 @@ const TablaPautas = () => {
       console.log(error);
     }
   };
-  
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Fecha</th>
-          <th>Titular</th>
-          <th>Resumen</th>
-          <th>Ruta Web</th>
-          <th>ruta Imagen</th>
-          <th>Ruta Video</th>
-        </tr>
-      </thead>
-      <tbody>
-      {pautas.map((pauta, index) => (
-          <tr key={pauta.id}>
-            <td>{index + 1}</td>
-            <td>{pauta.fec_pauta}</td>
-            <td>{pauta.des_titular}</td>
-            <td>{pauta.des_resumen}</td>
-            <td>{pauta.des_ruta_web}</td>
-            <td>{pauta.des_ruta_imagen}</td>
-            <td>{pauta.des_ruta_video}</td>
-          </tr>
-        ))}
+    <>
+      <Col>
+        {" "}
+        <Stack direction="horizontal" gap={3}>
+          <div className="justify-content-end ">
+            <Form className="d-flex">
+              <Form.Control
+                type="search"
+                placeholder="Buscar"
+                className="me-2"
+                aria-label="Search"
+                /* onChange={handleChange} */
+                // onChange={}
+                //value={}
+              />
+            </Form>
+          </div>
+          <div>
+            <Button variant="success">Agregar</Button>{" "}
+          </div>
+        </Stack>
+      </Col>
 
-      </tbody>
-    </Table>
-  )
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Titular</th>
+            <th>Resumen</th>
+            <th>Ruta Web</th>
+            <th>ruta Imagen</th>
+            <th>Ruta Video</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pautas.map((pauta, index) => (
+            <tr key={pauta.id}>
+              <td>{index + 1}</td>
+              <td>{pauta.fec_pauta}</td>
+              <td>{pauta.des_titular}</td>
+              <td>{pauta.des_resumen}</td>
+              <td>{pauta.des_ruta_web}</td>
+              <td>{pauta.des_ruta_imagen}</td>
+              <td>{pauta.des_ruta_video}</td>
+              <td>
+                <div>
+                  <Button variant="primary">Editar</Button>{" "}
+                  <Button variant="danger">Eliminar</Button>{" "}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
+  );
 };
 
 export default TablaPautas;
