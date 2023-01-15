@@ -3,6 +3,7 @@ import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Button, Form, Stack, Col } from "react-bootstrap";
+import ModalEliminarPauta from "./ModalEliminarPauta"
 
 const TablaPautas = () => {
   const [pautas, setPautas] = useState([]);
@@ -14,6 +15,14 @@ const TablaPautas = () => {
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  useEffect(() => {
+    if (deleted !== id) {
+      setPautas((prev) => prev.filter((pautas) => pautas.id !== deleted));
+      setDeleted(id);
+      
+    }
+  }, [deleted]);
 
   const getAllUsers = async () => {
     const token = localStorage.getItem("token");
@@ -80,7 +89,10 @@ const TablaPautas = () => {
               <td>
                 <div>
                   <Button variant="primary">Editar</Button>{" "}
-                  <Button variant="danger">Eliminar</Button>{" "}
+                  <ModalEliminarPauta
+                      id={pauta.id}
+                      setDelete={setDeleted}
+                    />{" "}
                 </div>
               </td>
             </tr>
