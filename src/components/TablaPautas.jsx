@@ -3,8 +3,10 @@ import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Button, Form, Stack, Col } from "react-bootstrap";
-import ModalEliminarPauta from "./ModalEliminarPauta"
-import ModalEditarPauta from "./ModalEditarPauta"
+import ModalEliminarPauta from "./ModalEliminarPauta";
+import ModalEditarPauta from "./ModalEditarPauta";
+import ModalAgregarPauta from "./ModalAgregarPauta";
+
 
 const TablaPautas = () => {
   const [pautas, setPautas] = useState([]);
@@ -12,6 +14,8 @@ const TablaPautas = () => {
   const [active, setActive] = useState(1);
   const [deleted, setDeleted] = useState(null);
   const [id, setId] = useState(null);
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     getAllUsers();
@@ -21,7 +25,6 @@ const TablaPautas = () => {
     if (deleted !== id) {
       setPautas((prev) => prev.filter((pautas) => pautas.id !== deleted));
       setDeleted(id);
-      
     }
   }, [deleted]);
 
@@ -60,7 +63,7 @@ const TablaPautas = () => {
             </Form>
           </div>
           <div>
-            <Button variant="success">Agregar</Button>{" "}
+            <ModalAgregarPauta setPautas={setPautas} />
           </div>
         </Stack>
       </Col>
@@ -89,11 +92,8 @@ const TablaPautas = () => {
               <td>{pauta.des_ruta_video}</td>
               <td>
                 <div>
-                <ModalEditarPauta id={pauta.id} setPautas={setPautas} />{" "}
-                  <ModalEliminarPauta
-                      id={pauta.id}
-                      setDelete={setDeleted}
-                    />{" "}
+                  <ModalEditarPauta id={pauta.id} setPautas={setPautas} />{" "}
+                  <ModalEliminarPauta id={pauta.id} setDelete={setDeleted} />{" "}
                 </div>
               </td>
             </tr>
