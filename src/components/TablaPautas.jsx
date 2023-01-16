@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-import { Button, Form, Stack, Col } from "react-bootstrap";
+import { Button, Form, Stack, Col,Row,Container } from "react-bootstrap";
 import ModalEliminarPauta from "./ModalEliminarPauta";
 import ModalEditarPauta from "./ModalEditarPauta";
 import ModalAgregarPauta from "./ModalAgregarPauta";
-
 
 const TablaPautas = () => {
   const [pautas, setPautas] = useState([]);
@@ -16,6 +15,10 @@ const TablaPautas = () => {
   const [id, setId] = useState(null);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  };
 
   useEffect(() => {
     getAllUsers();
@@ -46,6 +49,11 @@ const TablaPautas = () => {
 
   return (
     <>
+     <Container>
+        <Row></Row>
+        <Row>
+          <Col></Col>
+          <Col></Col>
       <Col>
         {" "}
         <Stack direction="horizontal" gap={3}>
@@ -56,7 +64,7 @@ const TablaPautas = () => {
                 placeholder="Buscar"
                 className="me-2"
                 aria-label="Search"
-                /* onChange={handleChange} */
+                onChange={handleChange}
                 // onChange={}
                 //value={}
               />
@@ -67,6 +75,9 @@ const TablaPautas = () => {
           </div>
         </Stack>
       </Col>
+
+      </Row>
+      </Container>
 
       <Table striped bordered hover>
         <thead>
@@ -81,23 +92,38 @@ const TablaPautas = () => {
           </tr>
         </thead>
         <tbody>
-          {pautas.map((pauta, index) => (
-            <tr key={pauta.id}>
-              <td>{index + 1}</td>
-              <td>{pauta.fec_pauta}</td>
-              <td>{pauta.des_titular}</td>
-              <td>{pauta.des_resumen}</td>
-              <td>{pauta.des_ruta_web}</td>
-              <td>{pauta.des_ruta_imagen}</td>
-              <td>{pauta.des_ruta_video}</td>
-              <td>
-                <div>
-                  <ModalEditarPauta id={pauta.id} setPautas={setPautas} />{" "}
-                  <ModalEliminarPauta id={pauta.id} setDelete={setDeleted} />{" "}
-                </div>
-              </td>
-            </tr>
-          ))}
+          {pautas
+            .filter(
+              (pauta) =>
+                pauta.des_titular
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                pauta.des_resumen
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                pauta.des_ruta_web
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) 
+                  //||
+                //  pauta.fec_pauta.toISOString().includes(search)
+            )
+            .map((pauta, index) => (
+              <tr key={pauta.id}>
+                <td>{index + 1}</td>
+                <td>{pauta.fec_pauta}</td>
+                <td>{pauta.des_titular}</td>
+                <td>{pauta.des_resumen}</td>
+                <td>{pauta.des_ruta_web}</td>
+                <td>{pauta.des_ruta_imagen}</td>
+                <td>{pauta.des_ruta_video}</td>
+                <td>
+                  <div>
+                    <ModalEditarPauta id={pauta.id} setPautas={setPautas} />
+                    <ModalEliminarPauta id={pauta.id} setDelete={setDeleted} />
+                  </div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </>
