@@ -4,6 +4,7 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Button, Form, Stack, Col } from "react-bootstrap";
 import ModalEliminarPauta from "./ModalEliminarPauta"
+import ModalEditarPauta from "./ModalEditarPauta"
 
 const TablaPautas = () => {
   const [pautas, setPautas] = useState([]);
@@ -88,7 +89,7 @@ const TablaPautas = () => {
               <td>{pauta.des_ruta_video}</td>
               <td>
                 <div>
-                  <Button variant="primary">Editar</Button>{" "}
+                <ModalEditarPauta id={pauta.id} setPautas={setPautas} />{" "}
                   <ModalEliminarPauta
                       id={pauta.id}
                       setDelete={setDeleted}
