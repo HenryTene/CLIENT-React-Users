@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Apiurl } from "../services/apirest";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-import { Button, Form, Stack, Col,Row,Container } from "react-bootstrap";
+import { Button, Form, Stack, Col, Row, Container } from "react-bootstrap";
 import ModalEliminarPauta from "./ModalEliminarPauta";
 import ModalEditarPauta from "./ModalEditarPauta";
 import ModalAgregarPauta from "./ModalAgregarPauta";
+import PaginacionPautas from "./PaginacionPautas";
 
 const TablaPautas = () => {
   const [pautas, setPautas] = useState([]);
   const [search, setSearch] = useState("");
-  const [active, setActive] = useState(1);
+  const [per_page, setPerPage] = useState(1);
   const [deleted, setDeleted] = useState(null);
   const [id, setId] = useState(null);
 
@@ -49,34 +50,33 @@ const TablaPautas = () => {
 
   return (
     <>
-     <Container>
+      <Container>
         <Row></Row>
         <Row>
           <Col></Col>
           <Col></Col>
-      <Col>
-        {" "}
-        <Stack direction="horizontal" gap={3}>
-          <div className="justify-content-end ">
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Buscar"
-                className="me-2"
-                aria-label="Search"
-                onChange={handleChange}
-                // onChange={}
-                //value={}
-              />
-            </Form>
-          </div>
-          <div>
-            <ModalAgregarPauta setPautas={setPautas} />
-          </div>
-        </Stack>
-      </Col>
-
-      </Row>
+          <Col>
+            {" "}
+            <Stack direction="horizontal" gap={3}>
+              <div className="justify-content-end ">
+                <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Buscar"
+                    className="me-2"
+                    aria-label="Search"
+                    onChange={handleChange}
+                    // onChange={}
+                    //value={}
+                  />
+                </Form>
+              </div>
+              <div>
+                <ModalAgregarPauta setPautas={setPautas} />
+              </div>
+            </Stack>
+          </Col>
+        </Row>
       </Container>
 
       <Table striped bordered hover>
@@ -101,11 +101,9 @@ const TablaPautas = () => {
                 pauta.des_resumen
                   .toLowerCase()
                   .includes(search.toLowerCase()) ||
-                pauta.des_ruta_web
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) 
-                  //||
-                //  pauta.fec_pauta.toISOString().includes(search)
+                pauta.des_ruta_web.toLowerCase().includes(search.toLowerCase())
+              //||
+              //  pauta.fec_pauta.toISOString().includes(search)
             )
             .map((pauta, index) => (
               <tr key={pauta.id}>
@@ -126,6 +124,9 @@ const TablaPautas = () => {
             ))}
         </tbody>
       </Table>
+      <Container style={{ display: "flex", justifyContent: "flex-end" }}>
+      <PaginacionPautas per_page={per_page} onPerPageChange={setPerPage} />
+      </Container>
     </>
   );
 };
